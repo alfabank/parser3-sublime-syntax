@@ -12,8 +12,8 @@ contexts:
       scope: punctuation.definition.comment.parser
       push: line_comment
 
-    - match: '\^rem{.*'
-      scope: punctuation.definition.comment.parser
+    - match: '\^rem{'
+      # scope: punctuation.definition.comment.parser
       push: block_comment
 
     # SQL
@@ -76,18 +76,6 @@ contexts:
     - match: '\(|\)'
       scope: meta.group.braces.round
 
-    # # Numbers
-    # - match: '\b(-)?[0-9.]+\b'
-    #   scope: constant.numeric.example-c
-
-  # double_quoted_string:
-  #   - meta_scope: string.quoted.double.example-c
-  #   - match: '\\.'
-  #     scope: constant.character.escape.example-c
-  #   - match: '"'
-  #     scope: punctuation.definition.string.end.example-c
-  #     pop: true
-
   line_comment:
     - meta_scope: comment.line.parser
     - match: $
@@ -95,16 +83,14 @@ contexts:
 
   block_comment:
     - meta_scope: comment.block.parser
-    - match: '{.*'
-      push: block_code
     - match: '}'
       pop: true
+    - match: '{'
+      push: block_code
 
   block_code:
     - meta_scope: block.parser
-    - match: '{.*'
-      push: block_code
     - match: '}'
       pop: true
-
-  # block_function:
+    - match: '{'
+      push: block_code
