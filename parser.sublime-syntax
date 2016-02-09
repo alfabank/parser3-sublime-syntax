@@ -1,0 +1,110 @@
+%YAML1.2
+---
+# See http://www.sublimetext.com/docs/3/syntax.html
+name: Parser
+file_extenstion: [p, pp, bp, html]
+scope: source.parser
+contexts:
+  main:
+
+    # Comments
+    - match: '^(#).*'
+      scope: punctuation.definition.comment.parser
+      push: line_comment
+
+    - match: '\^rem{.*'
+      scope: punctuation.definition.comment.parser
+      push: block_comment
+
+    # SQL
+    # Here to avoid func
+
+    - match: '(?i)(\^.*\.sql\.(table|int|void|string|hash)){'
+      scope: meta.sql
+      captures:
+        1: support.function
+      push: "Packages/SQL/SQL.sublime-syntax"
+      with_prototype:
+        - match: '(?=})'
+          pop: true
+
+    - match: '(?i)(.*)(:{1,2}sql)\{'
+      scope: meta.sql
+      captures:
+        2: variable.other
+      push: "Packages/SQL/SQL.sublime-syntax"
+      with_prototype:
+        - match: '(?=})'
+          pop: true
+
+    - match: '(.*)(\$sql\[)'
+      captures:
+        2: variable.other
+      push: "Packages/SQL/SQL.sublime-syntax"
+      with_prototype:
+        - match: '(?=])'
+          pop: true
+
+    # Types
+
+    - match: '\d|\btrue\b|\bfalse\b'
+      scope: constant.numeric
+
+    - match: '(?:\[)([^;^$\]]+)(?:\])'
+      scope: string
+
+    - match: '^@CLASS'
+      scope: entity.name.class
+
+
+    # Keywords
+    - match: '\^(if|for|eval|process|while|s(witch|leep)|c(a(se|che)|on(nect|tinue))|t(aint|hrow|ry)|u(ntaint|se)|apply-taint|break)\b'
+      scope: keyword.control.parser
+
+    # Functions
+
+    - match: '^(@[-_\w\d]+)(\[.*\])$'
+      captures:
+        1: entity.name.function
+        2: punctuation.definition.parameters
+
+    - match: '\^(?:[\w]+(?:\.|:|::)){0,}(?:[\w]+)'
+      scope: support.function
+
+    # other
+
+    - match: '\(|\)'
+      scope: meta.group.braces.round
+
+    # # Numbers
+    # - match: '\b(-)?[0-9.]+\b'
+    #   scope: constant.numeric.example-c
+
+  # double_quoted_string:
+  #   - meta_scope: string.quoted.double.example-c
+  #   - match: '\\.'
+  #     scope: constant.character.escape.example-c
+  #   - match: '"'
+  #     scope: punctuation.definition.string.end.example-c
+  #     pop: true
+
+  line_comment:
+    - meta_scope: comment.line.parser
+    - match: $
+      pop: true
+
+  block_comment:
+    - meta_scope: comment.block.parser
+    - match: '{.*'
+      push: block_code
+    - match: '}'
+      pop: true
+
+  block_code:
+    - meta_scope: block.parser
+    - match: '{.*'
+      push: block_code
+    - match: '}'
+      pop: true
+
+  # block_function:
