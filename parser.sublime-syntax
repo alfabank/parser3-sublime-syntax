@@ -76,6 +76,11 @@ contexts:
     - match: '\(|\)'
       scope: meta.group.braces.round
 
+    - match: '\$(?:[.{]{0,1})(?:[\w:]+\.){0,}(?:[\w:}-]+)'
+      scope: variable
+
+  # other contexts
+
   line_comment:
     - meta_scope: comment.line.parser
     - match: $
