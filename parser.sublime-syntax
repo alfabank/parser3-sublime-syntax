@@ -59,7 +59,7 @@ contexts:
 
     # Keywords
     - match: '\^(if|for|eval|process|while|s(witch|leep)|c(a(se|che)|on(nect|tinue))|t(aint|hrow|ry)|u(ntaint|se)|apply-taint|break)\b'
-      scope: keyword.control.parser
+      scope: keyword.control
 
     # Functions
 
