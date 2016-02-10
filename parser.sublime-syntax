@@ -53,7 +53,7 @@ contexts:
     - match: '(?:\[)([^;^$\]]+)(?:\])'
       scope: string
 
-    - match: '^@CLASS'
+    - match: '^(@CLASS|@USE|@BASE|@PARTIAL)'
       scope: entity.name.class
 
 
