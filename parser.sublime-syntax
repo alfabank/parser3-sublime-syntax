@@ -2,7 +2,7 @@
 ---
 # See http://www.sublimetext.com/docs/3/syntax.html
 name: Parser
-file_extenstion: [p, pp, bp, html]
+file_extensions: [p, pp, bp, html]
 scope: source.parser
 contexts:
   main:
